@@ -1,19 +1,21 @@
 /* 全体のリセット */
 body {
-    font-family: 'Noto Sans JP','Noto serif JP','sans-serif';
+    font-family: 'Noto Sans JP','Noto Serif JP',sans-serif;
     width: 100%;
-    max-width: 375px;
     margin: 0 auto;
     background-color: #fff;
 }
-
+.wrapper {
+  max-width: 375px;
+  margin: 0 auto;
+}
 /* --- ヘッダーのレイアウト --- */
 .header {
     position: relative; /* メニューの基準点になります */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
+    padding: 6px;
     background: #fff;
     z-index: 100; /* 重なり順を一番上に */
 }
@@ -44,21 +46,13 @@ body {
     white-space: nowrap;
     margin: 0px;
 }
-/* --- ヘッダーのレイアウト --- */
-.header {
-    position: relative; /* メニューの基準点になります */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background: #fff;
-    z-index: 100; /* 重なり順を一番上に */
-}
 /* ーーーーー　ハンバーガーメニューの記載コード一覧　ーーーーー　*/
 /* --- ハンバーガーアイコンの見た目 --- */
 .menu-icon {
     padding: 20px 10px;
     cursor: pointer;
+    position: relative;  /* .header */
+    z-index: 200;        /* ← menuより大きく */
 }
 
 .navicon {
@@ -101,17 +95,21 @@ body {
 
 /* --- 開くメニューのリスト --- */
 .menu {
-    display: none;
-    position: absolute;
-    top: 60px; /* ヘッダーの高さに合わせて調整 */
-    left: 0;
+    /*display: none;非表示*/
+    position: fixed; /* --- .headerの枠まで見えなくする --- */
+    top: 0; /* --- .headerの枠まで見えなくする --- */
+    left: 0; /* --- .headerの枠まで見えなくする --- */
     width: 100%;
+    height: 535px; 
     background: rgba(255, 255, 255, 0.95); /* 少しだけ透明にするとおしゃれ */
     list-style: none;
-    padding: 20px 0;
-    margin: 0;
+    padding: 80px 0;
     border-top: 1px solid #eee;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 150;  /* ← .menu-iconより小さく */
+    
+    transform: translateY(-535px);  /* ← 画面の上に隠す */
+    transition: transform 0.3s ease-in-out; /*  終わり がやさしく止まる */
 }
 
 .menu li {
@@ -128,30 +126,37 @@ body {
 
 /* チェックが入ったらメニューを表示 */
 .menu-btn:checked ~ .menu {
-    display: block;
+    transform: translateY(0); /* 下にスライド */
+    /*display: block;　表示*/
 }
 /* ハンバーガー用の checkbox だけ非表示にします。 */
 .menu-btn {
     display: none;
 }
 /*ーーーーー　画像のトリミング　ーーーーー　*/
+.main {
+    /*height: 4189.98px;*/
+    position: relative;
+}
 /*ーーーー　　親でサイズを決める　　ーーーー　*/
 .hero3 {
-  width: 375px;
+  width: 100%;
+  max-width: 375px;
   height: 480px;
   overflow: hidden; /*はみ出た部分を隠す*/
 }
-.hero3-img {
+.hero3 img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: 53% 40%;
+  display: block;
 }
-/*ーーーー　　CONCEPTの項目　　ーーーー　*/
+/*ーーーー　　CONCEPTの項目　　SP版ーーーー　*/
 .concept {
     margin: 48px 12px 80px 12px;
     width: 351px;
-    height: 220px;
+    /*height: 220px;*/
 }
 /*ーーーー　　CONCEPTおよびSERVICEの文字について　　ーーーー　*/
 h2 {
@@ -161,7 +166,8 @@ h2 {
     text-align: center;
     text-transform: uppercase;
 }
-.text-line {
+/*ーーーーコンセプトの文字についてーーーー　*/
+.text-ja {
     width: 202px;
     height: 12px;
     font-size: 12px;
@@ -169,24 +175,27 @@ h2 {
     margin: 8px auto 0;  /* ←中央寄せ */
     color: #223E69;
     
-    display: flex; /* text-lineの前後に線をいれるときに使用 */
-    align-items: center; /* text-lineの前後に線をいれるときに使用 */
-    justify-content: center; /* text-lineの前後に線をいれるときに使用 */
+    display: flex; /* text-jaの前後に線をいれるときに使用 */
+    align-items: center; /* text-jaの前後に線をいれるときに使用 */
+    justify-content: center; /* text-jaの前後に線をいれるときに使用 */
     gap: 5px; /* 文字と線の間隔 */
 }
-.text-line::before, 
-.text-line::after {
+/*ーーーーコンセプトの文字の前後の線ーーーー　*/
+.text-ja::before, 
+.text-ja::after {
     content: ""; /*文字は入れない。でも要素は作る*/
     width: 60.5px;
     height: 1px;
     background-color: #223E69;
 }
-h5 {
+/*ーーーーコンセプトの単語ーーーー　*/
+.concept h3 {
     font-size: 20px;
     font-weight: 500; /* Medium = 500 */
     margin-top: 24px;
     text-align: center;
 }
+/*ーーーーコンセプトの文章ーーーー　*/
 .family {
     width: 351px;
     height: 112px;
@@ -194,7 +203,7 @@ h5 {
     font-weight: 400; /* Regular = 400 */
     line-height: 28px; /* 行間　28px */
     letter-spacing: 0.1em; /* 文字間隔10% */
-    margin-top: 16px;
+    margin: 16px auto 0;
     color: #333;
 }
 /*ーーーー　　SERVICEの項目　　ーーーー　*/
@@ -203,12 +212,12 @@ h5 {
     width: 351px;
     height: 1206.87px;
 }
-.list_1 {
+.service-item {
     margin-top: 24px;
     height: 346.29px;
 }
 /* ---浴室、リビング、キッチンの文字について--- */
-h4 {
+.service h4 {
     font-family: "Noto Serif JP", serif;
     font-size: 20px; /* 文字サイズ14px */
     font-weight: 500; /* Medium = 500 */
@@ -229,7 +238,7 @@ h4 {
     color: #333;
 }
 /* ---Moreの文字と配置について--- */
-h6 {
+.more {
     font-family: "Noto Serif JP", serif;
     font-size: 14px; /* 文字サイズ14px */
     font-weight: 400; /* Regular = 400 */
@@ -238,15 +247,11 @@ h6 {
     text-align: right;
 }
 /* ---Moreの後の➤について--- */
-h6 a::after {
+.more a::after {
     content: "▶";
     margin-left: 8px;
 }
-/* ---リビングルームについて--- */
-.list_2 {
-    margin-top: 48px;
-    height: 346.29px;
-}
+
 /* ---リビングルームの注記について--- */
 .libi {
     height: 42px;
@@ -257,10 +262,7 @@ h6 a::after {
     margin-top: 8px;
     color: #333;
 }
-.list_3 {
-    margin-top: 48px;
-    height: 346.29px;
-}
+
 /* ---キッチンの注記について--- */
 .kittin {
     height: 42px;
@@ -274,8 +276,9 @@ h6 a::after {
 /* ---FLOWの項目について--- */
 .flow {
     width: 100%;
-    height: 475px;
+    /*height: 456px;*/
     margin-top: 80px;
+    padding: 80px 0;
     background-color: rgba(34, 62, 105, 0.05);/* #223E69の透明度5% */
 }
 /* ---FLOWの文字について--- */
@@ -310,42 +313,1265 @@ h6 a::after {
 }
 /* ---施工のリストの配置と▼と黒帯について--- */
 .arrow-list {
-list-style: none;
-padding: 0;
-margin: 0;
+    list-style: none;
+    padding: 0;
+    margin-top: 24px;
 }
 .arrow-list li {
-width: 300px;
-height: 32px;
-background-color: #000000;
-color: #fff;
+    width: 300px;
+    height: 32px;
+    background-color: #000000;
+    color: #fff;
 
-font-family: "Noto Serif JP", serif;
-font-size: 16px; /* 文字サイズ16px */
-font-weight: 500; /* Medium = 500 */
-line-height: 16px; /* 行間　16px */
-letter-spacing: 0.1em; /* 文字間隔10% */
+    font-family: "Noto Serif JP", serif;
+    font-size: 16px; /* 文字サイズ16px */
+    font-weight: 500; /* Medium = 500 */
+    line-height: 16px; /* 行間　16px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
 
- margin: 0 auto 32px; /* ▼分も含めて余白を確保 */
-display: flex;
-align-items: center;     /* 縦中央 */
-justify-content: center; /* 横中央 */
-border-radius: 6px;  /* ← 角にRを追加*/
-position: relative; /* ▼の基準 */
-font-size: 16px;
+    margin: 0 auto 32px; /* ▼分も含めて余白を確保 */
+    display: flex;
+    align-items: center;     /* 縦中央 */
+    justify-content: center; /* 横中央 */
+    border-radius: 16px;  /* ← 角にRを追加*/
+    position: relative; /* ▼の基準 */
+    font-size: 16px;
 }
 
 /* ▼を追加（最後以外） */
 .arrow-list li:not(:last-child)::after {
   content: "";
   position: absolute;
-  bottom: -20px;
-  left: 50%;
+  bottom: -24px; /*li のbottom 0が　下端にぴったりで、bottom: -24pxは、下記にマイナス24はみ出る　*/
+  left: 50%; /* 左から見て「50%の位置」位置　li の幅の中央に配置する→三角形の「左端」が中央に来るだけ　*/
+  transform: translateX(-50%); /* 自分の幅の 50% 分だけ左へ移動(疑似要素の幅は固定ではないため)。真ん中に補正 */
+
+  width: 0;
+  height: 0;
+  border-top: 16px solid #B71B26;
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+}
+/* ▼（1番目）の透明度60%　追加 */
+.arrow-list li:nth-child(1)::after {
+  border-top: 16px solid rgba(183, 27, 38, 0.6);
+}
+/* ▼（2番目）の透明度70%　追加 */
+.arrow-list li:nth-child(2)::after {
+  border-top: 16px solid rgba(183, 27, 38, 0.7);
+}
+/* ▼（3番目）の透明度80%　追加 */
+.arrow-list li:nth-child(3)::after {
+  border-top: 16px solid rgba(183, 27, 38, 0.8);
+}
+/* ▼（4番目）の透明度90%　追加 */
+.arrow-list li:nth-child(4)::after {
+  border-top: 16px solid rgba(183, 27, 38, 0.9);
+}
+/* ▼（5番目）の透明度100%　追加 */
+.arrow-list li:nth-child(5)::after {
+  border-top: 16px solid rgba(183, 27, 38, 1);
+}
+
+/* ---Q&Aの項目について--- */
+.qa-section {
+    margin: 80px 12px;
+    width: 351px;
+    height: auto;
+}
+/* ---”Q&A”の文字について--- */
+.qa-section h2 {
+    font-family: "Noto Serif JP", serif;
+    padding-top: 8px;
+    font-size: 28px; /* 文字サイズ28px */
+    font-weight: 700;/* Bold = 700 */
+    line-height: 28px; /* 行間　28px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    margin-top: 8px;
+    color: #333;
+}
+
+/* ---よくあるご質問の項目について--- */
+.subtitle {
+    font-family: "Noto Serif JP", serif;
+    width: 229px;
+    height: 12px;
+    font-size: 12px;
+    font-weight: 700;/* Bold = 700 */
+    margin: 8px auto 0;  /* ←中央寄せ */
+    color: #223E69;
+    
+    display: flex; /* subtitleの前後に線をいれるときに使用 */
+    align-items: center; /* subtitleの前後に線をいれるときに使用 */
+    justify-content: center; /* subtitleの前後に線をいれるときに使用 */
+    gap: 5px; /* 文字と線の間隔 */
+}
+.subtitle::before, 
+.subtitle::after {
+    content: ""; /*文字は入れない。でも要素は作る*/
+    width: 60.5px;
+    height: 1px;
+    background-color: #223E69;
+}
+/* ---QuestionとAnswerの項目について--- */
+/* ---QuestionとAnswerの全体--- */
+.qa-block1,
+.qa-block2 {
+    width: 351px;
+    position: relative; 
+} 
+/* ---Question1とAnswer1の高さ--- */
+.qa-block1 {
+    margin: 24px 12px 0 12px;
+    height: 130px;
+}
+/* ---Question2とAnswer2の高さ--- */
+.qa-block2 {
+    margin: 36px 12px 0 12px;
+    height: 190.11px;
+}
+/* ---QuestionとAnswerの大きさ--- */
+.circle-q,
+.circle-a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 20px;
+  font-family: "Noto Serif JP", serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  font-weight: bold;
+  flex-shrink: 0; /* 丸が縮まないように */
+}
+/* ---QuestionとAnswerの位置を左よりに配置--- */
+.circle-q span,
+.circle-a span {
+    transform: translateX(2px);
+}
+/* Questionの色分け */
+.circle-q {
+  background: #000;
+}
+/* Answerの色分け */
+.circle-a {
+  background: #B71B26;
+}
+/* --- Answerの文章 ---  */
+.qa-question,
+.qa-answer1,
+.qa-answer2 {
+    width: 351px;
+    height: 36px;
+    display: flex;
+    align-items: flex-start;  
+    gap: 2px; /* 丸とテキストの間隔 */
+}
+/* --- Questionの文章 ---  */
+.qa-question {
+    margin-top: 16px;
+}
+/* --- A1とAnswer1の文章 ---  */
+.qa-answer1 {
+    margin-top: 16px;
+}
+/* --- A2とAnswer2の文章 ---  */
+.qa-answer2 {
+    margin-top: 30px;
+}
+/* --- QuestionとAnswerの文章の大きさ ---  */
+.question-text,
+.answer-text {
+    margin-bottom: 16px;
+    width: 308px;
+    font-family: "Noto Sans JP", serif;
+    font-size: 16px; /* 文字サイズ16px */
+    font-weight: 400; /* Regular = 400 */
+    line-height: 24px; /* 行間　24px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    margin-top: 4px; /* Q文字とAnswerの文章を上下で揃える*/
+    color: #333;
+}
+/* ---問い合わせフォームの項目について--- */
+/* ---問い合わせフォームのに全体について--- */
+.contact_1 {
+    width: 100%;
+    max-width: 375px;
+    height: 912px;
+    padding: 48px 12px 80px;
+    position: relative; 
+    box-sizing: border-box;
+    background-color: rgba(34, 62, 105, 0.15);/* #223E69の透明度15% */
+    margin-bottom: 126px;
+}
+
+/* お問い合わせ種別のラベルを中央寄せ */
+.contact_1 label {
+    font-family: "Noto Sans JP", serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+/* ---お問い合わせの文字について--- */
+.contact_1_1 {
+    width: 215px;
+    height: 12px;
+    font-family: "Noto Sans JP", serif;
+    font-size: 12px;
+    font-weight: 400; /* Regular = 400 */
+    margin: 8px auto 0;  /* ←中央寄せ */
+    color: #333;
+
+    display: flex; /* .contact_1_1の前後に線をいれるときに使用 */
+    align-items: center; /* .contact_1_1の前後に線をいれるときに使用 */
+    justify-content: center; /* .contact_1_1の前後に線をいれるときに使用 */
+    gap: 5px; /* 文字と線の間隔 */
+}
+ /* ---お問い合わせの文字の左右の線について--- */
+.contact_1_1::before, 
+.contact_1_1::after {
+    content: ""; /*文字は入れない。でも要素は作る*/
+    width: 60.5px;
+    height: 1px;
+    background-color: #333;
+}
+/* ---お問い合わせの種別について--- */
+/* ---お問い合わせの種別全体について--- */
+.contact_type {
+    width: 186px;
+    height: 50px;
+    margin: 24px auto 24px;
+    text-align: left;
+    position: relative; 
+}
+/* ---”必須”について--- */
+.required {
+  display: inline-flex;      /* サイズを正確に制御 */
+  width: 40px;
+  height: 18px;
+  background-color: #B71B26; /* 赤 */
+  color: #fff;               /* 白文字 */
+  font-size: 10px;
+  font-weight: bold;
+  justify-content: center;   /* 横中央 */
+  align-items: center;       /* 縦中央 */
+  border-radius: 9px;        /* 丸み */
+}
+/* ---”お問い合わせの種別”について--- */
+.contact_1_2 {
+    font-family: "Noto Sans JP", serif;
+    font-size: 16px;
+    font-weight: 700;/* Bold = 700 */
+    line-height: 16px; /* 行間　16px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    color: #333;
+}
+/* ---”資料請求”と”ご相談”について--- */
+.radio-group {
+    width: 351px;
+    margin-top: 20px;
+    font-family: "Noto Sans JP", serif;
+    font-size: 14px;
+    align-items: center;
+    font-weight: 700;/* Bold = 700 */
+    line-height: 14px; /* 行間　14px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    flex-direction: row;
+    display: flex; /* ← label同士の横並び */
+    gap: 24px;   /* ← label同士の間を40px */
+    writing-mode: horizontal-tb; /* ← labelの文字を横向きにする */
+    text-orientation: mixed;
+}
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+}
+.form-row > label,
+.form-item > label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+/* ---”お名前のフォーム”について--- */
+.form-row,
+.form-item {
+  margin-bottom: 20px;
+}
+
+/* ---”枠のフォーム”について--- */
+.form-row input,
+.form-row textarea {
+    width: 100%;
+    max-width: 351px;
+    box-sizing: border-box;  
+    font-size: 16px;
+    font-weight: 700;/* Bold = 700 */
+    line-height: 16px; /* 行間　16px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    background-color: #fff;
+    padding: 4px 8px;         /* 文字が枠にくっつかないように */
+}
+.form-row input {
+    height: 30px;
+}
+.form-row textarea {
+    height: 120px;
+}
+
+/* ---”郵便番号の枠"--- */
+.form-row .short-input {
+  width: 125px;
+}
+
+/* ---”adressのフォーム”について--- */
+.address-fields  label {
+    display: block;
+}
+.address-fields {
+    text-align: left;
+    font-family: "Noto Sans JP", serif;
+    font-size: 16px;
+    font-weight: 700;/* Bold = 700 */
+    line-height: 16px; /* 行間　16px */
+}
+
+/* ---”郵便番号と住所のフォーム”について--- */
+.zip-row {
+  width: 351px;
+  display: flex;
+  align-items: center;  /* 中央揃え */
+  justify-content: flex-start; /* SP中央 */
+  gap: 8px;   /* 〒とinputの間 */
+  margin-left: 0;
+}
+/* 〒マーク */
+.zip-mark {
+  font-size: 14px;
+  font-weight: 400; /* Regular = 400 */
+  font-weight: bold;
+}
+.zip-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* 左寄せ */
+  gap: 8px; /* 〒と入力欄の間隔 */
+}
+/* ---”郵便番号のフォーム”について--- */
+.short-input {
+  width: 125px;
+  height: 30px;
+  margin-top: 8px;
+  box-sizing: border-box;
+  background-color: #fff;
+  padding: 4px 8px;
+}
+/* ---”住所のフォーム”について--- */
+.long-input {
+  display: block;
+  width: 351px;
+  height: 30px;
+  margin: 8px auto;
+  box-sizing: border-box;
+  background-color: #fff;
+  padding: 4px 8px;
+}
+/* ---お問い合わせ内容の文字について--- */
+.form-details {
+  width: 351px; 
+  margin: 8px auto 0;   /* ← 親を中央 */
+  text-align: center;
+  font-family: "Noto Sans JP", serif;
+  font-size: 16px;
+  font-weight: 700;/* Bold = 700 */
+  line-height: 16px; /* 行間　16px */
+}
+/* ---”お問い合わせ内容の枠”について--- */
+.contact1 textarea {
+  width: 100%;          /* 親に合わせる（.form-groupが親になる）*/
+  height: 120px;
+  box-sizing: border-box;  /* 幅の計算に　widthの中に含まれる*/
+  display: block;     /* ← 左右中央に配置するため */
+  margin: 8px auto 0;     /* ← 左右中央 */
+  background-color: #fff;
+  resize: vertical;
+}
+/* ---”入力内容を確認する”のボタンについて--- */
+.check {
+    margin: 24px 87.5px 16px 87.5px;
+    width: 200px;
+    height: 48px;
+    color: #fff;
+    background-color: #333;
+    display: flex;              /*  文字を中央配置の条件 */
+    justify-content: center;    /* 横中央 */
+    align-items: center;        /* 縦中央 */
+    font-family: "Noto Serif JP", serif;
+    font-size: 16px;
+    font-weight: 700;/* Bold = 700 */
+    line-height: 16px; /* 行間　16px */
+}
+.input-area {
+  display: flex;
+  gap: 24px;
+  justify-content: center; /* SPで中央 */
+  margin-top: 8px;
+  font-family: "Noto Sans JP", serif;
+}
+.input-area label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  width: auto;
+  writing-mode: horizontal-tb; /* 横書き */
+    text-orientation: mixed;      /* 文字向きを標準に */
+    transform: none;              /* 回転や傾きが入っていたら無効に */
+    white-space: nowrap;  /* ← これ重要 */
+}
+.input-area input[type="radio"] {
+  margin-right: 5px;
+  transform: scale(1.3); /* 約16pxくらい */
+}
+/* ---”上やじるし”の配置について--- */
+.pagetop {
+  position: fixed;
+  right: 12px;
+  bottom: 110px;
+  cursor: pointer; 
+  z-index: 1000
+}
+/* ---”footer”の表現について--- */
+.footer {
+    width: 100%;
+    height: 45px;
+    margin: 0 auto;
+    display: flex;            /* 文字を中央配置の条件*/
+    justify-content: center;  /* 横中央 */
+    align-items: center;      /* 縦中央 */
+    color: #fff;
+    background-color: #333;
+    font-family: "Noto Serif JP", serif;
+    font-size: 12px;
+    font-weight: 500; /* Medium = 500 */
+    line-height: 12px; /* 行間　16px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+}
+/* 入力可能な input と textarea の背景色 */
+input:focus,
+textarea:focus {
+    background-color: rgba(34, 62, 105, 0.25); /* 背景色 */
+    border: 3px solid #B71B26      /* 枠線 */; 
+}
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ---PC版”の制作--- */
+@media (min-width: 768px) {
+  .wrapper {
+  max-width: 1366px;
+  margin: 0 auto;
+}
+ /* ---”ハンバーガーメニュー"は，PC版では，非表示--- */
+.menu-icon {
+    display: none;
+ }
+  /* ---”ハンバーガーのボタン"も，PC版では，非表示--- */
+.menu-btn {
+    display: none;
+ }
+ /* ---”ハンバーガーメニュー"は，PC版では，非表示--- */
+  .menu {
+    position: static; /* fixed解除 */
+    transform: none; /* スライド解除 */
+    height: auto; /* メニューの高さを自由‗SP版は固定していた */
+    display: flex; /* メニューのlistを横並び */
+    justify-content: flex-end; /* メニューを右側に寄せる */
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    border-top: none;
+    font-family: "Noto Serif JP", serif;
+    font-size: 16px; /* 文字サイズ16px */
+    font-weight: 500; /* Medium = 500 */
+    line-height: 16px; /* 行間　16px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+  }
+ /* ---”ハンバーガーメニュー"は，PC版では，非表示--- */
+  .menu li {
+    padding: 0 15px;
+  }
+  /* ---”ヘッダー"の表示変更--- */
+   .header {
+    padding: 24px;
+  }
+  /* --- ロゴのスタイル：赤を控えめに、縁は黒 PC版--- */
+.logo-text {
+    /* サイズ指定 */
+    width: 480px;
+    
+    /* 書式：サンセリフ・太字・斜体 */
+    font-family: 'Arial Black', sans-serif;
+    font-size: 32px; 
+    font-weight: 700;/* Bold = 700 */
+    font-style: italic;
+    line-height: 1;
+    
+    /* 色の設定：落ち着いた赤（ボルドー） */
+    color: #B71B26; /* 鮮やかさを抑えた赤 */
+}
+/*ーーーーー　画像のトリミング　PC版ーーーーー　*/
+.main {
+    /*height: 4421.51px;*/
+    position: relative;
+}
+/*ーーーーー　画像のトリミング　PC版ーーーーー　*/
+.hero3 {
+  width: 100%;
+  max-width: 1366px;
+  height: 545px;
+  overflow: hidden; /*はみ出た部分を隠す*/
+}
+.hero3 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 53%; /*〇〇%　左右の割合、0% → 一番左　100% → 一番右　△△%　上下の割合い　0% → 一番上*/
+  display: block;
+}
+/*ーーーー　　CONCEPTの項目　　PC版ーーーー　*/
+.concept {
+    margin: 160px 173px 0px 173px;
+    width: 1020px;
+    height: 238px;
+}
+/*ーーーー　　CONCEPTおよびSERVICEの文字について　　PC版ーーーー　*/
+.concept h2 {
+    font-family: "Noto Serif JP", serif;
+    font-size: 42px;
+    font-weight: 700;/* Bold = 700 */
+    text-align: center;
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    text-transform: uppercase;
+}
+/*ーーーーコンセプトの文字について PC版ーーーー　*/
+.text-line {
+    width: 224px;
+    height: 16px;
+    font-size: 16px;
+    font-weight: 700;/* Bold = 700 */
+    margin: 16px auto 0;  /* ←中央寄せ */
+    color: #223E69;
+    
+    font-weight: 400; /* Regular = 400 */
+    line-height: 16px; /* 行間　16px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+
+    display: flex; /* text-lineの前後に線をいれるときに使用 */
+    align-items: center; /* text-lineの前後に線をいれるときに使用 */
+    justify-content: center; /* text-lineの前後に線をいれるときに使用 */
+    gap: 5px; /* 文字と線の間隔 */
+}
+/*ーーーーコンセプトの文字の前後の線 PC版ーーーー　*/
+.text-line::before, 
+.text-line::after {
+    content: ""; /*文字は入れない。でも要素は作る*/
+    width: 60.5px;
+    height: 1px;
+    background-color: #223E69;
+}
+/*ーーーーコンセプトの単語 PC版ーーーー　*/
+.concept h3 {
+    font-size: 28px;
+    font-weight: 500; /* Medium = 500 */
+    line-height: 28px; /* 行間　28px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    margin-top: 48px;
+    text-align: center;
+}
+/*ーーーーコンセプトの文章 PC版ーーーー　*/
+.family {
+    width: 1020px;
+    height: 64px;
+    margin-top: 24px;
+    font-size: 16px; /* 文字サイズ16px */
+    font-weight: 400; /* Regular = 400 */
+    line-height: 32px; /* 行間　32px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    margin: 16px auto 0;
+    color: #333;
+}
+/*ーーーー　　SERVICEの項目　PC版ーーーー　*/
+.service {
+    margin: 160px 173px 0px 173px;
+    width: 1020px;
+    height: 473.51px;
+}
+/*ーーーー　　SERVICEの3つを横並び　PC版 ーーーー　*/
+.service1 {
+
+    height: 351.51px;
+    display: flex;  
+    justify-content: space-between;
+    gap: 30px;               /* 要素の間隔 */
+    margin-top: 26px;
+    margin-bottom: 10px;
+}
+.service-item {
+    margin-top: 16px;
+    height: 346.29px;
+}
+.service-item img {
+    width: 300px;
+    height: 210.51px;
+}
+/* ---浴室、リビング、キッチンの文字について PC版--- */
+.service-item h4 {
+    font-family: "Noto Serif JP", serif;
+    font-size: 24px; /* 文字サイズ24px */
+    font-weight: 500; /* Medium = 500 */
+    line-height: 24px; /* 行間　24px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    margin-top: 16px;
+    text-align: center;
+    color: #333;
+}
+/* ---浴室の注記について PC版--- */
+.bathtub {
+    font-family: "Noto Serif JP", serif;
+    width: 300px;
+    height: 48px;
+    font-size: 16px; /* 文字サイズ14px */
+    font-weight: 400; /* Regular = 400 */
+    line-height: 24px; /* 行間　21px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    margin-top: 16px;
+    color: #333;
+}
+/* ---Moreの文字と配置について PC版 --- */
+.more {
+    font-family: "Noto Serif JP", serif;
+    font-size: 16px; /* 文字サイズ16px */
+    font-weight: 400; /* Regular = 400 */
+    line-height: 16px; /* 行間　16px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    margin-top: 16px;
+    text-align: right;
+}
+/* ---Moreの後の➤について PC版--- */
+.more a::after {
+    content: "▶";
+    margin-left: 8px;
+}
+/* ---リビングルームの注記について PC版--- */
+.libi {
+    font-family: "Noto Serif JP", serif;
+    width: 300px;
+    height: 48px;
+    font-size: 16px; /* 文字サイズ16px */
+    font-weight: 400; /* Regular = 400 */
+    line-height: 24px; /* 行間　24px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    margin-top: 16px;
+    color: #333;
+}
+/*
+/* ---キッチンの注記について PC版--- */
+.kittin {
+    font-family: "Noto Serif JP", serif;
+    width: 300px;
+    height: 48px;
+    font-size: 16px; /* 文字サイズ16px */
+    font-weight: 400; /* Regular = 400 */
+    line-height: 24px; /* 行間　24px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    margin-top: 16px;
+    color: #333;
+}
+/* ---FLOWの項目について--- */
+.flow {
+    width: 100%;
+    height: 498px;
+    padding-top: 48px;
+    background-color: rgba(34, 62, 105, 0.05);/* #223E69の透明度5% */
+}
+/* ---FLOWの文字について---PC版 */
+.flow h2 {
+    font-family: "Noto Serif JP", serif;
+    padding-top: 8px;
+    font-size: 42px; /* 文字サイズ42px */
+    font-weight: 700;/* Bold = 700 */
+    line-height: 42px; /* 行間　42px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    margin-top: 8px;
+    color: #333;
+}
+/* ---”施工の流れ”の文字について--- PC版 */
+.center {
+    margin-top: 16px;
+    font-size: 16px; /* 文字サイズ16px */
+    font-weight: 400; /* Regular = 400 */
+    line-height: 16px; /* 行間　16px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    color: #B71B26;
+    display: flex; /* centerの前後に線をいれるときに使用 */
+    align-items: center; /* centerの前後に線をいれるときに使用 */
+    justify-content: center; /* centerの前後に線をいれるときに使用 */
+    gap: 5px; /* 文字と線の間隔 */
+}
+/* ---”施工の流れ”の前後に付く棒について--- PC版 */
+.center::before,
+.center::after {
+    content: ""; /*文字は入れない。でも要素は作る*/
+    width: 60.5px;
+    height: 1px;
+    background-color: #B71B26;
+}
+/* ---施工のリストの配置(横向き)---PC版 */
+  .arrow-list {
+    width: 920px;
+    height: 280px;
+    margin: 48px auto;
+    display: flex;          /* 横並び */
+    justify-content: center;
+    align-items: center;
+  }
+/* ---と▼（右向き）と黒帯について---PC版 */
+.arrow-list li {
+    writing-mode: vertical-rl;  /* ← 縦書き */
+    width: 60px;
+    height: 280px;
+    background-color: #000000;
+    color: #fff;
+
+    font-family: "Noto Sans JP", serif;
+    font-size: 28px; /* 文字サイズ28px */
+    font-weight: 500; /* Medium = 500 */
+    line-height: 28px; /* 行間　28px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+
+    margin: 0 auto; /* ▼分も含めて余白を確保 */
+    display: flex;
+    align-items: center;     /* 縦中央 */
+    justify-content: center; /* 横中央 */
+    border-radius: 30px;  /* ← 角にRを追加*/
+    position: relative; /* ▼の基準 */
+}
+ /* --- SP用の▼を消す  PC版---*/
+  .arrow-list li::after {
+    content: none;
+  }
+/* ▶（右向き）（最後以外） PC版*/
+.arrow-list li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+
+  top: 40%;                /* 上から見て「50%の位置」位置縦中央 li の高さの中央に配置する→三角形の「上端」が中央に来るだけ*/
+  right: -100px;            /* li の　right 0が　Listの右側に配置　right -100px は、右側に-100pxはみ出す */
   transform: translateX(-50%);
 
   width: 0;
   height: 0;
-  border-top: 8px solid #B71B26;
-  border-left: 16px solid transparent;
-  border-right: 16px solid transparent;
+  border-left: 30px solid #B71B26;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
 }
+/* ▼（1番目）の透明度60%　追加 PC版*/
+.arrow-list li:nth-child(1)::after {
+  border-left: 30px solid rgba(183, 27, 38, 0.6);
+}
+/* ▼（2番目）の透明度70%　追加 PC版*/
+.arrow-list li:nth-child(2)::after {
+  border-left: 30px solid rgba(183, 27, 38, 0.7);
+}
+/* ▼（3番目）の透明度80%　追加 PC版*/
+.arrow-list li:nth-child(3)::after {
+  border-left: 30px solid rgba(183, 27, 38, 0.8);
+}
+/* ▼（4番目）の透明度90%　追加 PC版*/
+.arrow-list li:nth-child(4)::after {
+  border-left: 30px solid rgba(183, 27, 38, 0.9);
+}
+/* ▼（5番目）の透明度100%　追加 PC版*/
+.arrow-list li:nth-child(5)::after {
+  border-left: 30px solid rgba(183, 27, 38, 1);
+}
+
+/* ---Q&Aの項目について---PC版 */
+.qa-section {
+    margin: 160px 173px;
+    width: 1020px;
+    height: auto;
+}
+/* ---”Q&A”の文字について PC版--- */
+.qa-section h2 {
+    font-family: "Noto Serif JP", serif;
+    padding-top: 8px;
+    font-size: 42px; /* 文字サイズ42px */
+    font-weight: 700;/* Bold = 700 */
+    line-height: 42px; /* 行間　42px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    margin-top: 8px;
+    color: #333;
+}
+
+/* ---よくあるご質問の項目について PC版--- */
+.subtitle {
+    width: 259px;
+    height: 16px;
+    font-family: "Noto Serif JP", serif;
+    font-size: 16px;
+    font-weight: 700;/* Bold = 700 */
+    margin: 16px auto 0;  /* ←中央寄せ */
+    color: #223E69;
+    
+    display: flex; /* subtitleの前後に線をいれるときに使用 */
+    align-items: center; /* subtitleの前後に線をいれるときに使用 */
+    justify-content: center; /* subtitleの前後に線をいれるときに使用 */
+    gap: 5px; /* 文字と線の間隔 */
+}
+.subtitle::before, 
+.subtitle::after {
+    content: ""; /*文字は入れない。でも要素は作る*/
+    width: 60.5px;
+    height: 1px;
+    background-color: #223E69;
+}
+/* ---QuestionとAnswerの項目について---PC版 */
+/* ---QuestionとAnswerの全体---PC版 */
+.qa-block1,
+.qa-block2 {
+    width: 1020px;
+    position: relative; 
+} 
+/* ---Question1とAnswer1の高さ---PC版 */
+.qa-block1 {
+    margin: 48px auto;
+    height: 120px;
+}
+/* ---Question2とAnswer2の高さ---PC版 */
+.qa-block2 {
+    margin: 0 auto 160px;
+    height: 139.36px;
+}
+/* ---QuestionとAnswerの大きさ---PC版 */
+.circle-q,
+.circle-a {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 34px;
+
+  font-family: "Noto Serif JP", serif;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  flex-shrink: 0; /* 丸が縮まないように */
+}
+/* ---QuestionとAnswerの位置を左よりに配置---PC版 */
+.circle-q span,
+.circle-a span {
+    transform: translateX(4px);
+}
+/* Questionの色分け */
+.circle-q {
+  background: #000;
+}
+/* Answerの色分け */
+.circle-a {
+  background: #B71B26;
+}
+/* --- Answerの文章 ---PC版  */
+.qa-question,
+.qa-answer1,
+.qa-answer2 {
+    width: 1020px;
+    height: 52px;
+    display: flex;
+    align-items: flex-start;  
+    gap: 8px; /* 丸とテキストの間隔 */
+}
+/* --- Questionの文章 ---PC版  */
+.qa-question {
+    margin-top: 16px;
+}
+/* --- A1とAnswer1の文章 ---PC版  */
+.qa-answer1 {
+    margin-top: 16px;
+}
+/* --- A2とAnswer2の文章 ---PC版  */
+.qa-answer2 {
+    margin-top: 30px;
+}
+/* --- QuestionとAnswerの文章の大きさ ---PC版   */
+.question-text,
+.answer-text {
+    margin-bottom: 16px;
+    width: 960px;
+    font-family: "Noto Sans JP", serif;
+    font-size: 20px; /* 文字サイズ16px */
+    font-weight: 400; /* Regular = 400 */
+    line-height: 30px; /* 行間　30px */
+    letter-spacing: 0.1em; /* 文字間隔10% */
+    margin-top: 12px; /* Q文字とAnswerの文章を上下で揃える*/
+    color: #333;
+}
+/* ---問い合わせフォームの項目について---PC版 */
+/* ---問い合わせフォームのに全体について---PC版 */
+.contact_1 {
+    width: 100%;
+    max-width: 1366px;
+    height: 1218px;
+
+    margin: 0 auto;
+    position: relative; 
+    padding: 0px;
+    background-color: rgba(34, 62, 105, 0.15);/* #223E69の透明度15% */
+}
+/* ---contactの配置に全体について--- */
+.contact_1 h2 {
+    padding-top: 48px;
+}
+/* ---お問い合わせの文字について---PC版 */
+.contact_1_1 {
+    width: 241px;
+    height: 12px;
+    font-family: "Noto Sans JP", serif;
+    font-size: 16px;
+    font-weight: 400; /* Regular = 400 */
+    margin: 16px auto 0;  /* ←中央寄せ */
+    color: #333;
+
+    display: flex; /* .contact_1_1の前後に線をいれるときに使用 */
+    align-items: center; /* .contact_1_1の前後に線をいれるときに使用 */
+    justify-content: center; /* .contact_1_1の前後に線をいれるときに使用 */
+    gap: 8px; /* 文字と線の間隔 */
+}
+ /* ---お問い合わせの文字の左右の線について---PC版 */
+.contact_1_1::before, 
+.contact_1_1::after {
+    content: ""; /*文字は入れない。でも要素は作る*/
+    width: 60.5px;
+    height: 1px;
+    background-color: #333;
+}
+.input-area {
+    justify-content: flex-start; /* ← 左揃え */
+  }
+ .radio-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 0;
+    gap: 24px;
+  }
+  .radio-group label {
+    align-items: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+/* ---formについて--- */
+.form {
+    width: 1020px;
+    height: 1000px;
+    margin: 48px auto; /* ---中央配置の核--- */
+    padding-top: 48px;
+    background-color: rgba(255, 255, 255, 0.5)
+}
+/* ---お問い合わせの種別について--- */
+input[type="radio"] {
+    transform: scale(1.8); /* 約24pxくらい */
+  }
+
+/* ---”必須マーク”について--- */
+.required {
+    margin-left: 8px;
+    display: inline-flex;      /* サイズを正確に制御 */
+    padding: 2px 6px;
+    background-color: #B71B26; /* 赤 */
+    color: #fff;               /* 白文字 */
+    font-size: 12px;
+    font-weight: bold;
+    justify-content: center;   /* 横中央 */
+    align-items: center;       /* 縦中央 */
+    border-radius: 9px;        /* 丸み */
+}
+
+/* ---”addressのフォーム”について--- */
+.address-fields {
+    align-items: flex-start; /* ---右側を縦並び--- */
+    margin: 0 auto 20px;
+    width: 664px; /* フォーム全体幅（調整可） */
+
+}
+/* 〒＋郵便番号 */
+  .zip-group {
+    margin: 0;              /* ★余白リセット */
+    padding: 0;
+  }
+  /* 各フォーム行を横並び */
+  .contact_1 .form-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+ /* ラベル（左側） */
+  .contact_1 .form-row > label {
+    margin-bottom: 0;
+    justify-content: flex-end;
+    white-space: nowrap;
+  }
+
+
+  /* ラジオボタン行の調整 */
+  .contact_1 .input-area {
+    margin-top: 0;
+    justify-content: flex-start;
+  }
+ /* ★ 2カラム構造（左：項目 / 右：入力欄） */
+.form-row {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    align-items: start;
+    gap: 40px;                 
+  }
+.form-row label,
+.form-item label {
+    width: 290px;         /* ラベルの横幅を固定 */
+    text-align: right;     /* 左揃え */
+    font-size: 20px;
+    margin: 0;            /* 中央寄せの余白をリセット */
+    justify-content: flex-start;
+  }
+   /* 左列：ラベル（右寄せ） */
+.form-row > label {
+    justify-content: flex-end;
+    text-align: right;
+    align-items: center;
+
+    margin-bottom: 0;
+  }
+.contact_type {
+  height: auto;
+}
+  /* 入力エリア（右側） */
+  .contact_1 .input-area,
+  .contact_1 .address-fields {
+    flex: 1;
+  }
+
+
+.input-area label {
+  display: inline-flex;
+  align-items: center;
+  font-size: 20px;
+  gap: 6px;
+  width: auto;     /* 念のため */
+  white-space: nowrap;
+}
+/* PC版のみ */
+.address-fields > div {
+    flex: 1; 
+}
+.address-fields input {
+    flex: 1;
+    height: 36px;
+    box-sizing: border-box;
+    background: #fff;
+    padding: 4px 8px;
+}
+.address-fields label {
+    width: 220px;
+    flex-shrink: 0;
+    text-align: left;
+}
+.address-fields p {
+    text-align: center;
+    font-family: "Noto Sans JP", serif;
+    font-size: 16px;
+    font-weight: 700;/* Bold = 700 */
+    line-height: 16px; /* 行間　16px */
+}
+/* PC版のみ */
+.address-fields > p {
+    width: 220px;
+    flex-shrink: 0;
+    text-align: center;
+}
+/* 住所全体を縦並び */
+.address-fields {
+  display: flex;
+  flex-direction: column; /* ← 上下に並べる */
+  gap: 10px;
+  align-items: flex-start; /* ★左揃え */
+}
+/* ---”郵便番号と住所のフォーム”について--- */
+.zip-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;   /* 〒とinputの間 */
+  margin-bottom: 8px;
+}
+.zip-mark {
+  font-size: 25px;
+}
+.form-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 26px;
+}
+.form-item label {
+  width: 315px;   /* 他の項目と同じ幅 */
+  margin-left: 0;
+  padding-top: 20px;
+  padding-left: 195px;
+  text-align: left;
+}
+
+/* ---”郵便番号のフォーム”について--- */
+.short-input {
+  width: 125px;
+  height: 30px;
+  margin-top: 8px;
+  box-sizing: border-box;
+  background-color: #fff;
+  padding: 4px 8px;
+}
+/* ---”住所のフォーム”について--- */
+.long-input {
+  /*width: 351px;*/
+  width: 100%;    /* 右カラムいっぱい */
+  height: 30px;
+  margin-top: 24px;
+  display: block;
+  box-sizing: border-box;
+  background-color: #fff;
+  padding: 4px 8px;
+}
+ /* ===== 個別幅指定 ===== */
+ .contact_1 {
+    max-width: 1366px;
+    height: auto;
+    margin: 0 auto 126px;
+  }
+  /* まず全体指定 */
+
+.form-row input,
+.form-row textarea {
+  
+  max-width: none;
+}
+ /* SPの幅制限を解除 */
+  .form-row input,
+  .form-row textarea {
+    max-width: none;
+  }
+  /* 名前・フリガナ・電話番号 */
+  input[name="name"],
+  input[name="user_furigana"],
+  input[name="user_number"] {
+    width: 332px;
+    height: 52px;
+  }
+  /* 郵便番号 */
+  input[name="zipcode"] {
+    width: 125px;
+    height: 52px;
+  }
+  /* 住所 */
+  input[name="address-level1"] {
+    width: 664px;
+    height: 52px;
+  }
+  /* メール */
+  input[name="user_email"],
+  input[name="user_email_confirm"] {
+    width: 664px;
+    height: 52px;
+  }
+  /* 入力欄サイズの幅　*/
+ .form-row textarea {
+    width: 664px;
+    height: 208px;
+    box-sizing: border-box;
+  }
+
+
+/* ---”入力内容を確認する”のボタンについて--- */
+.check {
+    margin: 48px 360px 48px 360px;
+    width: 300px;
+    height: 68px;
+    color: #fff;
+    background-color: #333;
+    display: flex;              /*  文字を中央配置の条件 */
+    justify-content: center;    /* 横中央 */
+    align-items: center;        /* 縦中央 */
+    font-family: "Noto Serif JP", serif;
+    font-size: 16px;
+    font-weight: 700;/* Bold = 700 */
+    line-height: 16px; /* 行間　16px */
+}
+.form-input {
+  margin-top: 50px; /* 微調整（不要な場合あり） */
+}
+/* menuのマウスオーバー（色変化＋少し浮く） */
+.menu a {
+  display: inline-block;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.5s ease;
+}
+
+.menu a:hover {
+  color: #e8c2ca;          /* 文字色変化 */
+  transform: translateY(-15px);  /* 少し上に浮く */
+}
+
+}
+
+
